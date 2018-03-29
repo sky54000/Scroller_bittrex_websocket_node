@@ -1,0 +1,43 @@
+{
+  "name": "node-bittrex-api",
+  "version": "0.8.3",
+  "description": "Node Bittrex API - asynchronous node.js library for the Bittrex API https://bittrex.com/",
+  "keywords": [
+    "btc",
+    "xbt",
+    "bitcoin",
+    "altcoin",
+    "bittrex"
+  ],
+  "author": "David Parlevliet ( https://github.com/dparlevliet )",
+  "contributors": [],
+  "license": "MIT",
+  "dependencies": {
+    "cloudscraper": "^1.4.1",
+    "jsonic": "^0.3.0",
+    "mysql": "^2.15.0",
+    "node-cron": "^1.2.1",
+    "object-assign": "^4.1.1",
+    "request": ">= 2.35.0",
+    "signalr-client": "0.0.17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dparlevliet/node.bittrex.api"
+  },
+  "main": "node.bittrex.api.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "bugs": {
+    "url": "https://github.com/dparlevliet/node.bittrex.api/issues",
+    "email": "david.parlevliet.github@gmail.com"
+  },
+  "homepage": "https://github.com/dparlevliet/node.bittrex.api",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^3.3.0"
+  }
+}
