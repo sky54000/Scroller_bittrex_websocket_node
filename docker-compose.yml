@@ -1,0 +1,13 @@
+version: "3"
+services:
+  scroller:
+    build: ./
+    ports:
+      - 3306
+    expose:
+      - 80
+      - 3306
+networks:
+  platform:
+    external:
+      name: platform-networks

@@ -5,9 +5,9 @@ const bittrex = require('./node.bittrex.api');
 
 var multiplier = 100000000;
 
+// port: "3306",
 var con = mysql.createConnection({
   host: "0.0.0.0",
-  port: "3306",
   user: "root",
   password: "lmao22",
   database: "Askip_toolTradingBox"
