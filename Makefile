@@ -26,3 +26,6 @@ ps:
 
 logs:
 	$(DC) logs -f
+
+set_config:
+	python3 install/set_markets_configuration/getMarket.py

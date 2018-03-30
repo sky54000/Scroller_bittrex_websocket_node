@@ -11,13 +11,13 @@ COPY src/package*.json ./
 RUN apt-get update && apt-get install -y mysql-client libmysqlclient15-dev mysql-common
 
 
-RUN npm install
+RUN npm install && npm install js-yaml
 # If you are building your code for production
 # RUN npm install --only=production
 
 # Bundle app source
 COPY src/ .
-
+COPY config.yml .
 EXPOSE 80
 EXPOSE 3306
 CMD [ "node", "bittrex_listener.js" ]

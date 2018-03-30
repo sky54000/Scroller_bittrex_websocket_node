@@ -6,6 +6,7 @@ To be able to start the scroller you need to do:
 ```
 npm install dict --save
 npm install --save node-cron
+npm install node-yaml-config
 npm install
 ```
 
@@ -17,12 +18,57 @@ npm install
 
 
 ### Requirements:
+- [Python3](https://www.python.org)
 - [Docker](https://www.docker.com)
 - [Docker-compose](https://docs.docker.com/compose/)
+- [Docker network](https://docs.docker.com/network/)
 or
 - [Ansible]()
 ## Install
 
+First at all you must install the scroller configuration.
+so let's run:
+```
+# with make
+make install
+
+# if you have any failed with make it's probably because of the python location,
+# run the python script manually or make the python3 binary works with
+# the command `python3 --version`
+
+python3 install/set_markets_configuration/getMarket.py
+```
+
+That will get all available market from bittrex broker and set into config.yml,
+You must now set what markets your scroller's will store data.
+
+open `config.yml`:
+```
+target_base_currency_market:
+  - USDT
+baseCurrency:
+- BTC
+- USDT
+- ETH
+BTC:
+- BTC-LTC
+- BTC-DOGE
+- BTC-VTC
+...
+```
+Add these lines ('target_base_currency_market')at the top of your file,
+you can specify the baseCurency on the list
+
+In this case I want my scroller target all market with base currency 'USDT'.
+
+Create a docker network for your scroller:
+```
+docker network create websocket-scroller;
+
+# verify with :
+
+docker network ls;
+```
 ## Start
 
 

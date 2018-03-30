@@ -4,13 +4,30 @@ var cron = require('node-cron');
 const bittrex = require('./node.bittrex.api');
 
 var multiplier = 100000000;
+yaml = require('js-yaml');
+fs   = require('fs');
+try {
+  var config_markets = yaml.safeLoad(fs.readFileSync('/usr/src/app/config.yml', 'utf8'));
+  // console.log(doc);
+} catch (e) {
+  console.log(e);
+}
+var baseCurrencyList = config_markets["target_base_currency_market"];
+var marketList = new Array();
 
-// port: "3306",
+baseCurrencyList.forEach(function(baseCurrency){
+  marketsListTmp = config_markets[baseCurrency];
+  marketsListTmp.forEach(function(market){
+    marketList.push(market);
+  });
+});
+console.log(marketList);
+
 var con = mysql.createConnection({
-  host: "0.0.0.0",
+  host: "scroller_db",
   user: "root",
-  password: "lmao22",
-  database: "Askip_toolTradingBox"
+  password: "pass",
+  database: "scroller_database"
 });
 var d = dict({
     MarketName: 0,
