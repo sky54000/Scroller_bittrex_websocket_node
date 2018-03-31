@@ -3,6 +3,13 @@ var dict = require("dict");
 var cron = require('node-cron');
 const bittrex = require('./node.bittrex.api');
 
+Array.prototype.contains = function(elem) {
+  for (var i in this) {
+    if (this[i] == elem) return true;
+    }
+    return false;
+}
+
 var multiplier = 100000000;
 yaml = require('js-yaml');
 fs   = require('fs');
@@ -14,6 +21,7 @@ try {
 }
 var baseCurrencyList = config_markets["target_base_currency_market"];
 var marketList = new Array();
+var sharedMarketListObject = new Array();
 
 baseCurrencyList.forEach(function(baseCurrency){
   marketsListTmp = config_markets[baseCurrency];
@@ -22,7 +30,7 @@ baseCurrencyList.forEach(function(baseCurrency){
   });
 });
 // console.log(marketList);
-
+console.log(sharedMarketListObject)
 var con = mysql.createConnection({
   host: "scrollerdb",
   user: "root",
@@ -42,7 +50,8 @@ var d = dict({
     OpenSellOrders: 0,
     PrevDay: 0
 });
-var MarketList = new Array();
+
+// var MarketList = new Array();
 
 con.connect(function(err) {
   if (err) throw err;
@@ -64,6 +73,8 @@ var insertToDB = function(marketsDelta){
 
 cron.schedule('0,30 * * * * *', function(){
   console.log('running a task every 30 seconds');
+  console.log(sharedMarketListObject);
+  console.log("shared insert");
 });
 
 bittrex.options({
@@ -74,7 +85,11 @@ bittrex.options({
       bittrex.websockets.listen(function(data, client) {
         if (data.M === 'updateSummaryState') {
           data.A.forEach(function(data_for) {
+            sharedMarketListObject = new Array();
             data_for.Deltas.forEach(function(marketsDelta) {
+              if (marketList.contains(marketsDelta.MarketName) == true) {
+                sharedMarketListObject.push(marketsDelta)
+              }
               // console.log('Ticker Update for '+ marketsDelta.MarketName);//, marketsDelta);
               // var sql = "INSERT INTO ticker(id_bot, marketName, bid,ask,last, high, low, \
               //   volume, base_volume, open_buy_orders, open_sell_orders, moy_prev_day) \
