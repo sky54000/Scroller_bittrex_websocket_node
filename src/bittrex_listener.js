@@ -21,13 +21,13 @@ baseCurrencyList.forEach(function(baseCurrency){
     marketList.push(market);
   });
 });
-console.log(marketList);
+// console.log(marketList);
 
 var con = mysql.createConnection({
-  host: "scroller_db",
+  host: "scrollerdb",
   user: "root",
   password: "pass",
-  database: "scroller_database"
+  database: "Scroller_db"
 });
 var d = dict({
     MarketName: 0,

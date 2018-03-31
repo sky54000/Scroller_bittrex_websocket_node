@@ -1,24 +1,21 @@
 version: "3"
 services:
-  scroller_db:
+  scrollerdb:
     build:
       context: data/
     environment:
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_USER: test
       MYSQL_PASSWORD: pass
-      MYSQL_DATABASE: scroller_database
+      MYSQL_DATABASE: Scroller_db
     volumes:
       - ./data-volume:/var/lib/mysql
     networks:
       - platform
   scroller:
     build: ./
-    ports:
-      - 3306
     expose:
       - 80
-      - 3306
     networks:
       - platform
 networks:

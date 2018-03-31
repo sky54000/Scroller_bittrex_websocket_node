@@ -71,6 +71,16 @@ docker network ls;
 ```
 ## Start
 
+For start the scroller you have to:
+```
+make
+
+or
+
+make up
+```
+
+> take a look at the [Documentation section](#documentation)
 
 ## logs
 you can verify your module is up with:
@@ -88,24 +98,26 @@ for logs:
 
 _Makefile commands available_:
 
-| **commands name** | **description**        |
-|:-----------------:|:---------------------- |
-|      `make`       | 1. down each service   |
-|                   | 2. build basic project |
-|                   | 3. run project         |
-|                   |                        |
-|  `make build_up`  | 1. build basic project |
-|                   | 2. run project         |
-|                   |                        |
-|   `make build`    | build basic project.   |
-|                   |                        |
-|     `make up`     | run project            |
-|                   |                        |
-|    `make down`    | down project           |
-|                   |                        |
-|     `make ps`     | list container         |
-|                   |                        |
-|    `make logs`    | display all logs       |
+| **commands name** | **description**              |
+|:-----------------:|:---------------------------- |
+|      `make`       | 1. down each service         |
+|                   | 2. build basic project       |
+|                   | 3. run project               |
+|                   |                              |
+|  `make build_up`  | 1. build basic project       |
+|                   | 2. run project               |
+|                   |                              |
+|   `make build`    | build basic project.         |
+|                   |                              |
+|     `make up`     | run project                  |
+|                   |                              |
+|    `make down`    | down project                 |
+|                   |                              |
+|     `make ps`     | list container               |
+|                   |                              |
+|   `make dumps`    | make a sql dumps of tickers. |
+|                   |                              |
+|    `make logs`    | display all logs             |
 
 _Tricks_:
 

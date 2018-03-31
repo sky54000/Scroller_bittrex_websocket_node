@@ -27,5 +27,8 @@ ps:
 logs:
 	$(DC) logs -f
 
+dumps:
+	docker-compose exec scrollerdb /usr/bin/mysqldump -u root --password=pass Scroller_db > backup.sql
+
 set_config:
-	python3 install/set_markets_configuration/getMarket.py
+	python3 config/set_markets_configuration/getMarket.py
