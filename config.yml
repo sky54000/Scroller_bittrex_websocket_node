@@ -1,6 +1,5 @@
 target_base_currency_market:
   - USDT
-  - ETH
 baseCurrency:
 - BTC
 - USDT
