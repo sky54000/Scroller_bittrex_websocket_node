@@ -101,6 +101,13 @@ make up
 
 > take a look at the [Documentation section](#documentation)
 
+you can extract the data of your scroller by making a dumps.
+the makefile provide a command for it:
+```shell
+make dumps
+```
+then it generate a mysql-dumps on the root directory  at `backup.sql`.
+
 ## logs
 you can verify your module is up with:
 ```shell
@@ -161,6 +168,11 @@ if the commands failed use the docker-compose command:
 > - [Git documentation](https://git-scm.com/documentation)
 > - [Docker network documentation](https://docs.docker.com/engine/userguide/networking/work-with-networks/)
 
+### Ansible install packages
+
+- docker
+- docker-compose
+- websocket-scroller (by github clonging)
 
 ## version
 
