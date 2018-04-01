@@ -10,12 +10,11 @@ Array.prototype.contains = function(elem) {
     return false;
 }
 
-var multiplier = 100000000;
+var multiplier = function(nb){ return nb * 100000000;};
 yaml = require('js-yaml');
 fs   = require('fs');
 try {
   var config_markets = yaml.safeLoad(fs.readFileSync('/usr/src/app/config.yml', 'utf8'));
-  // console.log(doc);
 } catch (e) {
   console.log(e);
 }
@@ -29,51 +28,44 @@ baseCurrencyList.forEach(function(baseCurrency){
     marketList.push(market);
   });
 });
-// console.log(marketList);
-console.log(sharedMarketListObject)
+
 var con = mysql.createConnection({
   host: "scrollerdb",
   user: "root",
   password: "pass",
   database: "Scroller_db"
 });
-var d = dict({
-    MarketName: 0,
-    Bid: 0,
-    Ask: 0,
-    Last: 0,
-    High: 0,
-    Low: 0,
-    Volume: 0,
-    BaseVolume: 0,
-    OpenBuyOrders: 0,
-    OpenSellOrders: 0,
-    PrevDay: 0
-});
-
-// var MarketList = new Array();
 
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 });
 
-var insertToDB = function(marketsDelta){
+var insertToDB = function(market){
   var sql = "INSERT INTO ticker(id_bot, marketName, bid,ask,last, high, low, \
     volume, base_volume, open_buy_orders, open_sell_orders, moy_prev_day) \
-    VALUES(" + "4242" + ", \'" + marketsDelta.MarketName + "\', \'" + marketsDelta.Bid * multiplier + "\',\
-    \'" + marketsDelta.Ask * multiplier + "\', \'" + marketsDelta.Last * multiplier + "\', \'" + marketsDelta.High * multiplier + "\',\
-    \'" + marketsDelta.Low * multiplier + "\', \'" + marketsDelta.Volume + "\', \'" + marketsDelta.BaseVolume + "\',\
-    \'" + marketsDelta.OpenBuyOrders + "\', \'" + marketsDelta.OpenSellOrders + "\', \'" + marketsDelta.PrevDay * multiplier + "\')";
+    VALUES(" + "4242" + ", \'" +
+    market.MarketName + "\', \'" +
+    multiplier(market.Bid) + "\', \'" +
+    multiplier(market.Ask) + "\', \'" +
+    multiplier(market.Last) + "\', \'" +
+    multiplier(market.High) + "\',\'" +
+    multiplier(market.Low) + "\', \'" +
+    market.Volume + "\', \'" +
+    market.BaseVolume + "\', \'" +
+    market.OpenBuyOrders + "\', \'" +
+    market.OpenSellOrders + "\', \'" +
+    multiplier(market.PrevDay) + "\')";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    //console.log("Result: " + result);
   });
 };
 
+// cron is call each 30 seconds to insert the shared object into database.
 cron.schedule('0,30 * * * * *', function(){
-  console.log('running a task every 30 seconds');
-  console.log(sharedMarketListObject);
+  sharedMarketListObject.forEach(function(market) {
+    insertToDB(market);
+  });
   console.log("shared insert");
 });
 
@@ -81,7 +73,7 @@ bittrex.options({
   verbose: true,
   websockets: {
     onConnect: function() {
-      console.log('onConnect fired');
+      console.log('Scroller start soon.');
       bittrex.websockets.listen(function(data, client) {
         if (data.M === 'updateSummaryState') {
           data.A.forEach(function(data_for) {
@@ -90,17 +82,6 @@ bittrex.options({
               if (marketList.contains(marketsDelta.MarketName) == true) {
                 sharedMarketListObject.push(marketsDelta)
               }
-              // console.log('Ticker Update for '+ marketsDelta.MarketName);//, marketsDelta);
-              // var sql = "INSERT INTO ticker(id_bot, marketName, bid,ask,last, high, low, \
-              //   volume, base_volume, open_buy_orders, open_sell_orders, moy_prev_day) \
-              //   VALUES(" + "4242" + ", \'" + marketsDelta.MarketName + "\', \'" + marketsDelta.Bid * multiplier + "\',\
-              //   \'" + marketsDelta.Ask * multiplier + "\', \'" + marketsDelta.Last * multiplier + "\', \'" + marketsDelta.High * multiplier + "\',\
-              //   \'" + marketsDelta.Low * multiplier + "\', \'" + marketsDelta.Volume + "\', \'" + marketsDelta.BaseVolume + "\',\
-              //   \'" + marketsDelta.OpenBuyOrders + "\', \'" + marketsDelta.OpenSellOrders + "\', \'" + marketsDelta.PrevDay * multiplier + "\')";
-              // con.query(sql, function (err, result) {
-              //   if (err) throw err;
-              //   //console.log("Result: " + result);
-              // });
             });
           });
         }

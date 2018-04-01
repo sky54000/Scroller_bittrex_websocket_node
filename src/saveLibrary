@@ -1,0 +1,4 @@
+npm install dict --save
+npm install --save node-cron
+npm install node-yaml-config
+npm install

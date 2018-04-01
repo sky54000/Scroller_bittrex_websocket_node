@@ -1,21 +1,25 @@
-# Scroller_bittrex_websocket_node
-Usefull scroller for Bittrex platform using websocket with lots of use cases.
+# Scroller bittrex websocket nodejs
 
-To be able to start the scroller you need to do:
+Bittrex websocket scroller with docker container and Ansible script for deploy.
+This scroller is developped with an nodejs application and a mysql container for
+embeded the storage system. All script for manage platform or deploy are using
+Ansible.
 
-```
-npm install dict --save
-npm install --save node-cron
-npm install node-yaml-config
-npm install
-```
+> Feel free to improve it or propose your ideas to improve it.
 
-# Scroller Ticker Bot
+## summary:
 
-### summary:
+- [Introduction](#introduction)
+- [Install](#install)
+- [Start](#start)
+- [Utils](#utils)
+- [Deploy on server](#deploy-on-server)
+- [References](#references)
+
 
 ## Introduction
 
+All of these requirements are needed for a local usage.
 
 ### Requirements:
 - [Python3](https://www.python.org)
@@ -23,14 +27,22 @@ npm install
 - [Docker-compose](https://docs.docker.com/compose/)
 - [Docker network](https://docs.docker.com/network/)
 
+for a server deployment you also need Ansible was installed and the remote hosts are
+available to be managed by Ansible.
+### Server Deployment Requirements:
+- [Ansible](https://www.ansible.com)
+- Remote available for ansible managing
 
-or
-- [Ansible]()
+> The server deployment install packages, a list of this package is available: [here](#ansible-install-packages)
+
+
 ## Install
 
 First at all you must install the scroller configuration.
-so let's run:
-```
+The scroller configuration is a list of cryptocurrency markets store in `config.yml`.
+
+Generate the config file (use python3 script):
+```shell
 # with make
 make install
 
@@ -38,16 +50,19 @@ make install
 # run the python script manually or make the python3 binary works with
 # the command `python3 --version`
 
-python3 install/set_markets_configuration/getMarket.py
+python3 config/set_markets_configuration/getMarket.py
 ```
+If this command failed because of missing python3 yaml package install it and retry.
 
-That will get all available market from bittrex broker and set into config.yml,
-You must now set what markets your scroller's will store data.
+> The python script provide the Bittrex python api wrapper but feel free [to stars the repository](https://github.com/ericsomdahl/python-bittrex).
+
+That will get all available market from Bittrex broker and set into `config.yml`,
+You must now set which markets your scroller's will get.
 
 open `config.yml`:
-```
+```yaml
 target_base_currency_market:
-  - USDT
+- USDT
 baseCurrency:
 - BTC
 - USDT
@@ -58,26 +73,28 @@ BTC:
 - BTC-VTC
 ...
 ```
-Add these lines ('target_base_currency_market')at the top of your file,
-you can specify the baseCurency on the list
+Add these lines 'target_base_currency_market' at the top of your file,
+target_base_currency_market will be use to chose which market ticker
+will be insert into the database.
 
-In this case I want my scroller target all market with base currency 'USDT'.
+In the case above, I want my scroller target all market with base currency 'USDT'.
 
 Create a docker network for your scroller:
-```
+```shell
 docker network create websocket-scroller;
 
 # verify with :
 
 docker network ls;
 ```
+
 ## Start
 
 For start the scroller you have to:
-```
+```shell
 make
 
-or
+# or
 
 make up
 ```
@@ -86,12 +103,12 @@ make up
 
 ## logs
 you can verify your module is up with:
-```
+```shell
   make ps
 ```
 
 for logs:
-```
+```shell
   # all logs
   make logs
 ```
@@ -149,5 +166,5 @@ if the commands failed use the docker-compose command:
 
 | **Version** | **Description**                                       |
 |:-----------:|:----------------------------------------------------- |
-|    0.0.1    | Connect websocket client and display ticker (handler) |
+|    0.0.2    | Connect websocket client and store ticker in database |
 |             |                                                       |
