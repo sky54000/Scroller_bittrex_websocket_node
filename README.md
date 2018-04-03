@@ -1,15 +1,17 @@
 # Scroller bittrex websocket nodejs
 
+
 __version__: 0.0.3
 
-Bittrex websocket scroller with docker container and Ansible script for deploy.
-This scroller is developped with an nodejs application and a mysql container for
-embeded the storage system. All script for manage platform or deploy are using
+Bittrex websocket scroller with docker container and Ansible script to deploy.
+This scroller is developped with a nodejs application and a mysql container to
+embeded the storage system. All script to manage or deploy the platform are using
+
 Ansible.
 
-> Feel free to improve it or propose your ideas to improve it.
+> Feel free to improve it or submit your ideas to improve it.
 
-## summary:
+## Summary:
 
 - [Introduction](#introduction)
 - [Install](#install)
@@ -29,13 +31,12 @@ All of these requirements are needed for a local usage.
 - [Docker-compose](https://docs.docker.com/compose/)
 - [Docker network](https://docs.docker.com/network/)
 
-for a server deployment you also need Ansible was installed and the remote hosts are
-available to be managed by Ansible.
+For a server deployment you also need Ansible to be installed and remote hosts available to be managed by Ansible.
 ### Server Deployment Requirements:
 - [Ansible](https://www.ansible.com)
 - Remote available for ansible managing
 
-> The server deployment install packages, a list of this package is available: [here](#ansible-install-packages)
+> The server deployment install packages, a list of these packages is available: [here](#ansible-install-packages)
 
 
 ## Install
@@ -43,7 +44,7 @@ available to be managed by Ansible.
 First at all you must install the scroller configuration.
 The scroller configuration is a list of cryptocurrency markets store in `config.yml`.
 
-Generate the config file (use python3 script):
+To generate the config file (use python3 script):
 ```shell
 # with make
 make install
@@ -245,7 +246,7 @@ _Troubles possible_:
 
 make logs failed:
 if the commands failed use the docker-compose command:
-`docker-compose logs`
+`docker-compose logs -f`
 
 ## Reference
 
@@ -269,4 +270,4 @@ if the commands failed use the docker-compose command:
 |:-----------:|:----------------------------------------------------- |
 |    0.0.1    | Connect websocket client and display ticker |
 |    0.0.2    | Connect websocket client and store ticker in database |
-|      0.0.3       |           Store ticker on database + base deploy                                            |
+|      0.0.3       |            Store ticker on database + base deploy                                            |
