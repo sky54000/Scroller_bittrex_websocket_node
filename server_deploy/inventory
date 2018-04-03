@@ -1,0 +1,5 @@
+[scroller]
+servera.example.com ansible_user=guest
+
+[scroller:vars]
+scroller_path=/home/guest/Bittrex_ticker_bot

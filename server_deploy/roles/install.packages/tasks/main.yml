@@ -1,0 +1,13 @@
+---
+# tasks file for install.packages
+- name: Install base packages
+  apt: name={{ item }} state=installed
+  with_items:
+    - python3
+    - python3-pip
+  tags:
+    - packages
+- name: Upgrade pip
+  pip: name=pip state=latest
+  tags:
+    - packages

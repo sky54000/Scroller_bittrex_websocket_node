@@ -1,0 +1,22 @@
+---
+- name: Clone the scroller from github
+  git:
+    repo: ssh://git@github.com/sky54000/Scroller_bittrex_websocket_node.git
+    dest: "{{ scroller_path }}"
+
+- name: Create a network websocket-scroller
+  command: docker network create websocket-scroller
+  ignore_errors: yes
+
+- name: make project
+  make:
+    chdir: "{{ scroller_path }}"
+
+- name: Wait mysql storage init itself
+  pause:
+    seconds: 30
+
+- name: make up the scroller after init storage
+  make:
+    target: up
+    chdir: "{{ scroller_path }}"

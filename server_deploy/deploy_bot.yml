@@ -1,0 +1,9 @@
+---
+- name: Scroller install
+  hosts: scroller
+  roles:
+    - role: geerlingguy.docker
+      become: yes
+    - role: install.packages
+      become: yes
+    - role: install.platform
