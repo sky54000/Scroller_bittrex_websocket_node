@@ -123,18 +123,18 @@ for being able to make a fast deploy on your servers.
 #### little instruction for beginer with ansible
 
 Ansible is a sofware which make the managing of remote server easy, Ansible is an agentless software,
-that mean you doesn't need something install on the remote host for using it(except a /bin/python).
+that mean you doesn't need something to be installed on the remote host to use it(except a /bin/python).
 
 The install with ansible will be provide by push ssh.
 
 > Take a look on the Ansible [website](https://www.ansible.com) and [documentation](http://docs.ansible.com/ansible/latest/user_guide/playbooks.html)
-> for understand the basic usage of the technologie.
+> to understand the basic usage of the technologie.
 
 #### set your host configuration.
 
 You must set where you want to deploy, let's open the `server_deploy/inventory` file.
 
-It contain `[scroller]` section, below this section you can add all remote host you want to provide with the script.
+It contain a `[scroller]` section, below this section you can add all remote host you want to provide with the script.
 
 ```yaml
 [scroller]
@@ -163,7 +163,7 @@ install ansible roles:
 ansible-galaxy install geerlingguy.docker
 ```
 
-the script use galaxy role from greerlingguy because his use good practice and
+the script use galaxy role from greerlingguy because its use good practice and
 it's easy to use.
 
 > You can found more information about [Ansible Galaxy here](http://docs.ansible.com/ansible/latest/reference_appendices/galaxy.html) and the github of [geerlingguy here](https://github.com/geerlingguy).
@@ -195,8 +195,11 @@ so the -K option ask what is the sudo password.(its possible to specifying in th
 look at the Ansible documentation)
 
 
-for get the sql dump you have to connect to your remote hosts for run the command `make dumps`,
+to get the sql dump you have to connect to your remote hosts to run the command `make dumps`,
 then use scp to get it locally.
+```
+ scp username@remotehost.com:mydump.sql /some/local/directory 
+```
 
 ## logs
 you can verify your module is up with:
