@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY src/package*.json ./
 
-RUN apt-get update && apt-get install -y mysql-client libmysqlclient15-dev mysql-common
+RUN apt-get update && apt-get install -y mysql-client default-libmysqlclient-dev mysql-common
 
 
 RUN npm install && npm install js-yaml
